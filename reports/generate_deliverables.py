@@ -326,7 +326,7 @@ def build_presentation():
             "Data Cleaning Process",
             [
                 "Removed 17,047 exact duplicate rows",
-                "Removed 3,546 records with invalid discount (>100%)",
+                "Removed 3,546 records with inconsistent discount format (discount_percent > 1)",
                 "Validated data types and discount format (decimal 0–1)",
                 "Final clean dataset: 31,527 unique product records",
             ],

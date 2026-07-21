@@ -76,6 +76,7 @@ def main() -> None:
     with st.sidebar:
         st.header("Filters")
         min_products = st.slider("Min products per brand", 1, 50, 20)
+        st.caption("Default: ≥ 20 products for sample size reliability (matches Notebook 5).")
         selected_segments = st.multiselect(
             "Price segment",
             options=PRICE_LABELS,
