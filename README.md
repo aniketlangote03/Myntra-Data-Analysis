@@ -2,9 +2,23 @@
 
 **Author:** [Aniket Langote](https://github.com/aniketlangote03) · [LinkedIn](https://www.linkedin.com/in/aniketlangote03)
 
+![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-150458?logo=pandas&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?logo=streamlit&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-orange)
+![Status](https://img.shields.io/badge/Project-Completed-success)
+
 An end-to-end data analytics project analyzing Myntra's men's jeans product catalog to uncover pricing trends, brand performance, discount strategies, and customer engagement patterns.
 
 > **Note:** Do not commit the `venv/` folder — it is listed in `.gitignore`. Always create a local virtual environment after cloning.
+
+## Project Highlights
+
+- **52,120 Raw Records Cleaned:** Handled missing data, deduplicated 17,047 duplicate listings, and cleaned scraper scale anomalies down to 31,527 high-quality records.
+- **5 Structured Analytics Notebooks:** Modular end-to-end pipeline following data loading, quality assessment, cleaning, EDA, and advanced business insights.
+- **Interactive Streamlit Dashboard:** Built a real-time web application (`dashboard/app.py`) for filtering brands, price tiers, and performance scores.
+- **Composite Scoring Models:** Developed Value Score and Business Performance Score to rank 371 brands objectively.
+- **Automated Deliverables:** Python automation (`reports/generate_deliverables.py`) producing executive DOCX report, PPTX presentation, and PDF export.
 
 ## Key Visualizations
 
@@ -73,8 +87,9 @@ Myntra-Data-Analysis/
 │   ├── strip_outputs.py                 # Clear notebook outputs before commit
 │   └── generate_key_charts.py           # Export key charts to images/
 ├── reports/
-│   ├── Myntra_Data_Analysis_Report.docx # Final written report
-│   └── Myntra_Data_Analysis_Presentation.pptx
+│   ├── Myntra_Data_Analysis_Report.docx # Final written report (Word)
+│   ├── Myntra_Data_Analysis_Report.pdf  # Executive report (PDF export)
+│   └── Myntra_Data_Analysis_Presentation.pptx # Presentation deck
 │
 ├── dashboard/
 │   └── app.py                           # Streamlit interactive dashboard
@@ -91,6 +106,15 @@ Myntra-Data-Analysis/
 - **Matplotlib & Seaborn** – Data visualization
 - **Streamlit & Plotly** – Interactive dashboard
 - **Jupyter Notebook / JupyterLab** – Interactive analysis environment
+
+## Skills Demonstrated
+
+- **Data Cleaning & Quality Assessment:** Anomaly detection, duplicate deduplication, scraper format normalization.
+- **Exploratory Data Analysis (EDA):** Univariate/bivariate distribution analysis, price segmentation, metric aggregations.
+- **Data Visualization:** Custom Seaborn, Matplotlib, and Plotly interactive charts.
+- **Feature Engineering & Composite Scoring:** Min-max normalization and multi-criteria weighted scoring (Value Score & Business Performance Score).
+- **Interactive Web Dashboarding:** Building Streamlit apps with responsive filters, metric KPIs, and dynamic Plotly plots.
+- **Executive Communication:** Automated report generation (DOCX/PDF/PPTX) and actionable data storytelling.
 
 ## Business Questions
 
