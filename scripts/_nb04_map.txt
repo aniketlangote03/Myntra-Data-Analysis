@@ -1,0 +1,233 @@
+  0 [mark]: # Exploratory Data Analysis (EDA) |  | ## Scope of This Notebook |  | This notebook focuses on **uni
+  1 [mark]: # Business Questions |  | The following business questions will be answered during this analysis: | 
+  2 [mark]: # Import Required Libraries |  | The following libraries are used for data manipulation and visualiz
+  3 [code]: import pandas as pd | import numpy as np | import matplotlib.pyplot as plt | import seaborn as sns |
+  4 [mark]: # Load Clean Dataset |  | Load the cleaned dataset generated during the Data Cleaning phase. | 
+  5 [code]: df = pd.read_csv("../data/myntra_cleaned.csv") |  | # Reproducible summary statistics (computed from
+  6 [mark]: # Verify Dataset |  | Display the first five rows to verify that the cleaned dataset has been loaded
+  7 [code]: df.head()
+  8 [mark]: ### Observation |  | The cleaned dataset has been loaded successfully. |  | The dataset is now ready
+  9 [mark]: # Dataset Overview |  | Before performing any analysis, it is important to understand the structure 
+ 10 [code]: df.shape
+ 11 [mark]: ### Observation |  | The cleaned dataset contains **31,527 product records** and **7 variables**, pr
+ 12 [code]: df.describe()
+ 13 [mark]: # Univariate Analysis | # Section A – Pricing Analysis |  | Pricing is one of the most important fac
+ 14 [mark]: ## Business Question 1 |  | ### What is the average selling price of products? |  | Understanding th
+ 15 [code]: average_price = df["price"].mean() |  | average_price
+ 16 [code]: df["price"].describe()
+ 17 [mark]: ### Observation |  | The average selling price of products is **₹1,618.15**. |  | The pricing distri
+ 18 [mark]: ### Business Insight |  | Most products listed on Myntra are positioned in the **mid-range pricing s
+ 19 [mark]: ### Recommendation |  | Myntra should continue strengthening its mid-range product portfolio, as thi
+ 20 [mark]: ## Price Distribution |  | ### Business Question |  | How are product prices distributed across the 
+ 21 [code]: plt.figure(figsize=(10,6)) |  | sns.histplot(df["price"], bins=30, kde=True) |  | plt.title("Distrib
+ 22 [mark]: ### Observation |  | The distribution of product prices is **highly right-skewed (positively skewed)
+ 23 [mark]: ### Business Insight |  | Myntra's product catalog is primarily focused on the affordable and mid-ra
+ 24 [mark]: ### Recommendation |  | Myntra should continue strengthening its affordable and mid-range product of
+ 25 [mark]: ## Business Question 3 |  | ### Which are the most expensive products? |  | Identifying the highest-
+ 26 [mark]: ### Display Top 10 Most Expensive Products |  | Retrieve the ten highest-priced products from the da
+ 27 [code]: top_10_expensive = df.nlargest(10, "price") |  | top_10_expensive
+ 28 [mark]: ### Visualize Top 10 Most Expensive Products |  | The following visualization compares the selling p
+ 29 [code]: plt.figure(figsize=(12,8)) |  | sns.barplot( |     data=top_10_expensive, |     y="pants_description
+ 30 [mark]: ### Observation |  | The top 10 most expensive products are priced between **₹43,650** and **₹54,000
+ 31 [mark]: ### Business Insight |  | The premium segment of Myntra's catalog is dominated by a small number of 
+ 32 [mark]: ### Recommendation |  | Myntra should continue strengthening partnerships with premium brands such a
+ 33 [mark]: ## Business Question 4 |  | ### Which are the least expensive products? |  | Understanding the least
+ 34 [mark]: ### Display Top 10 Least Expensive Products |  | Retrieve the ten products with the lowest selling p
+ 35 [mark]: ## Create Product Label |  | Create a new column by combining the brand name and product description
+ 36 [mark]: ### Display Top 10 Least Expensive Products |  | Retrieve the ten products with the lowest selling p
+ 37 [code]: bottom_10_products = df.nsmallest(10, "price") |  | bottom_10_products
+ 38 [mark]: ### Visualize Top 10 Least Expensive Products |  | The following chart compares the ten least expens
+ 39 [code]: plt.figure(figsize=(13,8)) |  | bottom_10_products = bottom_10_products.copy() | bottom_10_products[
+ 40 [mark]: ### Observation |  | The least expensive products are priced between **₹337 and ₹375**, indicating a
+ 41 [mark]: ### Business Insight |  | Myntra's product catalog includes a dedicated budget segment with products
+ 42 [mark]: ### Recommendation |  | Myntra should continue promoting budget-friendly products through dedicated 
+ 43 [mark]: ### Business Decision |  | Maintain a balanced pricing strategy by supporting both premium and budge
+ 44 [mark]: ### Conclusion |  | The analysis shows that Myntra offers a competitive range of budget-friendly pro
+ 45 [mark]: ## Business Question 5 |  | ### How are products distributed across different price categories? |  |
+ 46 [mark]: ### Business Objective |  | The objective of this analysis is to classify products into predefined p
+ 47 [mark]: ### Why is this analysis important? |  | Grouping products into pricing categories enables businesse
+ 48 [mark]: ### Create Price Categories |  | Products will be classified into five pricing segments based on the
+ 49 [code]: bins = [0,1000,2000,3000,5000,60000] |  | labels = [ |     "Budget", |     "Economy", |     "Mid-Ran
+ 50 [mark]: ### Observation |  | The table shows the number of products available in each price category. |  | T
+ 51 [mark]: ### Visualize Product Distribution by Price Category |  | The following chart compares the number of
+ 52 [code]: plt.figure(figsize=(9,6)) |  | order = [ |     "Budget", |     "Economy", |     "Mid-Range", |     "
+ 53 [mark]: ### Observation |  | The visualization clearly shows that the **Economy** category dominates the pro
+ 54 [mark]: ### Business Insight |  | The pricing distribution suggests that Myntra's primary market consists of
+ 55 [mark]: ### Recommendation |  | Myntra should continue investing in the Budget and Economy segments, as thes
+ 56 [mark]: ### Business Decision |  | Maintain a balanced pricing strategy by prioritizing inventory and promot
+ 57 [mark]: ### Conclusion |  | The analysis reveals that Myntra's catalog is heavily concentrated in the Budget
+ 58 [mark]: # Section B – Brand Analysis |  | Brands play a significant role in customer purchasing decisions an
+ 59 [mark]: ## Business Question 1 |  | ### Which brands have the largest product catalog? |  | Understanding th
+ 60 [mark]: ### Business Objective |  | The objective of this analysis is to identify the brands with the highes
+ 61 [mark]: ### Why is this analysis important? |  | Brands with a larger number of products generally have: |  
+ 62 [mark]: ### Calculate Product Count by Brand |  | Count the number of products listed by each brand and iden
+ 63 [code]: top_brands = ( |     df["brand_name"] |     .value_counts() |     .head(10) | ) |  | top_brands
+ 64 [mark]: ### Observation |  | The table displays the ten brands with the highest number of listed products. |
+ 65 [mark]: ### Visualize Top 10 Brands |  | The following chart compares the number of products listed by the t
+ 66 [code]: colors = ["crimson"] + ["steelblue"] * 9 |  | plt.figure(figsize=(12,7)) |  | plt.barh( |     top_br
+ 67 [mark]: ### Observation |  | The horizontal bar chart clearly shows that **United Colors of Benetton** domin
+ 68 [mark]: ### Business Insight |  | The analysis suggests that Myntra relies heavily on a few major brands to 
+ 69 [mark]: ### Recommendation |  | Myntra should continue strengthening relationships with high-contributing br
+ 70 [mark]: ### Business Decision |  | Maintain strong strategic partnerships with leading brands while encourag
+ 71 [mark]: ### Conclusion |  | The analysis reveals that Myntra's product catalog is concentrated among a few d
+ 72 [mark]: ## Business Question 2 |  | ### Which brands have the highest average selling price? |  | While some
+ 73 [mark]: ### Business Objective |  | The objective of this analysis is to identify brands with the highest av
+ 74 [mark]: ### Why is this analysis important? |  | Average selling price reflects a brand's pricing strategy a
+ 75 [code]: brand_avg_price = ( |     df.groupby("brand_name")["price"] |       .mean() |       .sort_values(asc
+ 76 [code]: plt.figure(figsize=(12,7)) |  | sns.barplot( |     x=brand_avg_price.values, |     y=brand_avg_price
+ 77 [mark]: ### Observation |  | The analysis identifies the top ten brands with the highest average selling pri
+ 78 [mark]: ### Business Insight |  | The analysis indicates that Myntra's premium segment is dominated by inter
+ 79 [mark]: ### Recommendation |  | Myntra should continue strengthening relationships with premium and luxury b
+ 80 [mark]: ### Business Decision |  | Continue expanding the premium fashion segment by supporting luxury brand
+ 81 [mark]: ### Conclusion |  | The analysis demonstrates that Myntra hosts several luxury fashion brands with s
+ 82 [mark]: ## Business Question 3 |  | ### Which brands have the highest average customer ratings? |  | Custome
+ 83 [mark]: ### Business Objective |  | The objective of this analysis is to identify the brands with the highes
+ 84 [mark]: ### Why is this analysis important? |  | Brands with consistently high customer ratings often enjoy:
+ 85 [mark]: ### Calculate Average Rating by Brand |  | Calculate the average customer rating for each brand and 
+ 86 [code]: brand_rating = ( |     df.groupby("brand_name") |       .agg( |           Average_Rating=("ratings",
+ 87 [mark]: ### Visualize the Top Rated Brands |  | The following chart compares the brands with the highest ave
+ 88 [code]: plt.figure(figsize=(12,7)) |  | sns.barplot( |     data=brand_rating.reset_index(), |     x="Average
+ 89 [mark]: ### Observation |  | The bar chart shows that the average customer ratings of the top ten brands are
+ 90 [mark]: ### Recommendation |  | Myntra should continue strengthening partnerships with consistently high-per
+ 91 [mark]: ### Business Decision |  | Prioritize collaborations with brands that achieve both high customer rat
+ 92 [mark]: ### Conclusion |  | The analysis demonstrates that several brands consistently receive high customer
+ 93 [mark]: ## Business Question 4 |  | ### Which brands receive the highest customer engagement? |  | Customer 
+ 94 [mark]: ### Business Objective |  | The objective of this analysis is to identify the brands that receive th
+ 95 [mark]: ### Why is this analysis important? |  | The number of customer ratings serves as a proxy for custom
+ 96 [mark]: ### Calculate Customer Engagement by Brand |  | Calculate the total number of customer ratings recei
+ 97 [code]: brand_engagement = ( |     df.groupby("brand_name") |       .agg( |           Total_Ratings=("number
+ 98 [mark]: ### Observation |  | The table displays the ten brands that have received the highest total number o
+ 99 [mark]: ### Visualize Customer Engagement |  | The following chart compares the brands with the highest cust
+100 [code]: plt.figure(figsize=(12,7)) |  | sns.barplot( |     data=brand_engagement.reset_index(), |     x="Tot
+101 [mark]: ### Observation |  | The bar chart clearly shows that **Roadster** receives significantly more custo
+102 [mark]: ### Business Insight |  | The analysis indicates that customer engagement is not determined solely b
+103 [mark]: ### Recommendation |  | Myntra should continue investing in highly engaging brands such as **Roadste
+104 [mark]: ### Business Decision |  | Prioritize strategic partnerships with brands that consistently demonstra
+105 [mark]: ### Conclusion |  | The analysis demonstrates that **Roadster** is the most engaging brand on Myntra
+106 [mark]: # Section C – Discount Analysis |  | Discounts are one of the most important pricing strategies used
+107 [mark]: # Business Question 1 |  | ## What is the average discount offered on Myntra? |  | Understanding the
+108 [mark]: ### Business Objective |  | Calculate the average discount percentage across all products and unders
+109 [mark]: ### Why is this analysis important? |  | Discounts directly influence customer purchasing decisions.
+110 [mark]: ### Step 1 — Validate Discount Values |  | Before analyzing discounts, verify that all discount valu
+111 [code]: print("Minimum Discount:", df["discount_percent"].min()) |  | print("Maximum Discount:", df["discoun
+112 [mark]: ### Observation |  | The validation confirms that all discount values are within the valid range of 
+113 [mark]: ### Step 2 — Calculate the Average Discount |  | Calculate the average discount percentage offered a
+114 [code]: average_discount = df["discount_percent"].mean() * 100 |  | print(f"Average Discount: {average_disco
+115 [mark]: ### Observation |  | The average discount offered across all products is **50.34%**. |  | This indic
+116 [mark]: ### Step 3 — Discount Distribution Statistics |  | Generate descriptive statistics to understand the
+117 [code]: (df["discount_percent"] * 100).describe()
+118 [mark]: ### Observation |  | The discount distribution shows that: |  | - The **average discount** is **50.3
+119 [mark]: ### Step 4 — Visualize Discount Distribution |  | Create a histogram to visualize how discounts are 
+120 [code]: plt.figure(figsize=(10,6)) |  | sns.histplot( |     df["discount_percent"]*100, |     bins=30, |    
+121 [mark]: ### Observation |  | The histogram shows that the majority of products receive discounts between **4
+122 [mark]: ### Business Insight |  | The analysis indicates that Myntra adopts a highly competitive pricing str
+123 [mark]: ### Recommendation |  | Myntra should continue offering discounts within the **40%–60%** range, as t
+124 [mark]: ### Business Decision |  | Maintain the current promotional strategy centered around moderate-to-hig
+125 [mark]: ### Conclusion |  | The discount analysis reveals that Myntra's pricing strategy is heavily driven b
+126 [mark]: # Business Question 2 |  | ## Which brands offer the highest average discounts? |  | Different brand
+127 [mark]: ### Business Objective |  | Calculate the average discount percentage for each brand and identify th
+128 [mark]: ### Why is this analysis important? |  | Understanding brand-level discount strategies helps busines
+129 [mark]: ### Step 1 — Calculate Average Discount by Brand |  | Calculate the average discount percentage offe
+130 [code]: brand_discount = ( |     df.groupby("brand_name") |       .agg( |           Average_Discount=("disco
+131 [mark]: ### Observation |  | The analysis identifies the ten brands offering the highest average discounts o
+132 [mark]: ### Step 2 — Visualize Brand Discounts |  | Create a bar chart comparing the average discount percen
+133 [code]: plt.figure(figsize=(12,7)) |  | ax = sns.barplot( |     data=brand_discount.reset_index(), |     x="
+134 [mark]: ### Observation |  | The bar chart shows that the average discounts among the top ten brands are rel
+135 [mark]: ### Business Insight |  | The analysis indicates that several brands compete primarily through aggre
+136 [mark]: ### Recommendation |  | Myntra should regularly evaluate the performance of brands offering consiste
+137 [mark]: ### Business Decision |  | Continue supporting brands that effectively use promotional pricing while
+138 [mark]: ### Conclusion |  | The analysis demonstrates that several brands consistently offer average discoun
+139 [mark]: # Business Question 3 |  | ## Which products receive the highest discounts? |  | While the previous 
+140 [mark]: ### Business Objective |  | Identify the products with the highest discount percentages and examine 
+141 [mark]: ### Why is this analysis important? |  | Analyzing product-level discounts helps businesses: |  | - 
+142 [mark]: ### Step 1 — Retrieve Products with the Highest Discounts |  | Sort the dataset by discount percenta
+143 [code]: top_discount_products = ( |     df.sort_values("discount_percent", ascending=False) |       .head(10
+144 [mark]: ### Observation |  | The analysis identifies the ten products with the highest discount percentages 
+145 [mark]: ### Step 2 — Create Labels for Visualization |  | Combine the brand name and product description to 
+146 [code]: top_discount_products["Product_Label"] = ( |     top_discount_products["brand_name"] |     + " | " |
+147 [mark]: ### Step 3 — Visualize the Highest Discounted Products |  | The following chart compares the top ten
+148 [code]: # Sort data for better visualization | plot_data = top_discount_products.sort_values( |     by="Disc
+149 [mark]: ### Observation |  | The bar chart shows that most of the top discounted products receive the maximu
+150 [mark]: ### Business Insight |  | The analysis suggests that exceptionally high discounts are concentrated o
+151 [mark]: ### Recommendation |  | Myntra should periodically evaluate products receiving extremely high discou
+152 [mark]: ### Business Decision |  | Continue using targeted product-level discounts for promotional campaigns
+153 [mark]: ### Conclusion |  | The analysis shows that the highest discounts are concentrated on a limited numb
+154 [mark]: # Business Question 4 |  | ## Does offering higher discounts lead to better customer ratings? |  | O
+155 [mark]: ### Business Objective |  | Determine whether products receiving larger discounts also tend to recei
+156 [mark]: ### Why is this analysis important? |  | Understanding this relationship helps businesses evaluate w
+157 [mark]: ### Step 1 — Calculate Correlation |  | Calculate the Pearson correlation coefficient between discou
+158 [code]: correlation = df["discount_percent"].corr(df["ratings"]) |  | print(f"Correlation : {correlation:.3f
+159 [mark]: ### Observation |  | The Pearson correlation coefficient between **discount percentage** and **custo
+160 [mark]: ### Step 2 — Create Scatter Plot |  | Visualize the relationship between discount percentage and cus
+161 [code]: plt.figure(figsize=(10,6)) |  | sns.scatterplot( |     data=df, |     x=df["discount_percent"]*100, 
+162 [mark]: ### Observation |  | The scatter plot shows that customer ratings are widely distributed across all 
+163 [mark]: ### Step 3 — Add Regression Line |  | A regression line helps visualize the overall trend between di
+164 [code]: plt.figure(figsize=(10,6)) |  | sns.regplot( |     data=df, |     x=df["discount_percent"]*100, |   
+165 [mark]: ### Observation |  | The regression line has a slight downward slope, consistent with the weak negat
+166 [mark]: ### Business Insight |  | The analysis indicates that offering larger discounts does not necessarily
+167 [mark]: ### Recommendation |  | Myntra should continue using discounts to attract customers but should prior
+168 [mark]: ### Business Decision |  | Maintain promotional campaigns as a customer acquisition tool, but alloca
+169 [mark]: ### Conclusion |  | The relationship analysis demonstrates that discount percentage has only a **ver
+170 [mark]: # Business Question 5 |  | ## Does offering higher discounts increase customer engagement? |  | Disc
+171 [mark]: ### Business Objective |  | Determine whether there is a relationship between discount percentage an
+172 [mark]: ### Why is this analysis important? |  | Understanding this relationship helps businesses evaluate w
+173 [mark]: ### Step 1 — Calculate Correlation |  | Calculate the Pearson correlation coefficient between discou
+174 [code]: correlation = df["discount_percent"].corr(df["number_of_ratings"]) |  | print(f"Correlation : {corre
+175 [mark]: ### Observation |  | The Pearson correlation coefficient between **discount percentage** and **numbe
+176 [mark]: ### Step 2 — Scatter Plot |  | Visualize the relationship between discount percentage and customer e
+177 [code]: plt.figure(figsize=(12,7)) |  | sns.scatterplot( |     data=df, |     x=df["discount_percent"] * 100
+178 [mark]: ### Observation |  | The scatter plot shows that products with both low and high discounts receive a
+179 [mark]: ### Step 3 — Regression Plot |  | Add a regression line to visualize the overall trend between disco
+180 [code]: plt.figure(figsize=(12,7)) |  | sns.regplot( |     data=df, |     x=df["discount_percent"] * 100, | 
+181 [mark]: ### Observation |  | The regression line is nearly horizontal, confirming the extremely weak positiv
+182 [mark]: ### Business Insight |  | The analysis indicates that offering larger discounts does not automatical
+183 [mark]: ### Recommendation |  | Myntra should continue using discounts as part of its promotional strategy b
+184 [mark]: ### Business Decision |  | Maintain discounts as a promotional tool while investing in product quali
+185 [mark]: ### Conclusion |  | The analysis reveals that discount percentage has an **extremely weak positive c
+186 [mark]: # Section C Summary |  | The discount analysis examined Myntra's promotional pricing strategy and it
+187 [mark]: # Section D – Rating & Customer Engagement Analysis |  | Customer ratings and customer engagement ar
+188 [mark]: ## Business Questions |  | This section answers the following questions: |  | 1. What is the overall
+189 [mark]: # Business Question 1 |  | ## What is the overall distribution of customer ratings? |  | Understandi
+190 [mark]: ### Business Objective |  | Analyze the overall distribution of customer ratings and calculate descr
+191 [mark]: ### Why is this analysis important? |  | Customer ratings are one of the strongest indicators of pro
+192 [mark]: ### Step 1 — Rating Statistics |  | Generate descriptive statistics for customer ratings.
+193 [code]: df["ratings"].describe()
+194 [mark]: ### Observation |  | The descriptive statistics indicate that the dataset contains ratings for **31,
+195 [mark]: ### Step 2 — Rating Distribution |  | Visualize the distribution of customer ratings using a histogr
+196 [code]: plt.figure(figsize=(12,7)) |  | sns.histplot( |     df["ratings"], |     bins=20, |     kde=True, | 
+197 [mark]: ### Observation |  | The histogram shows that customer ratings are concentrated between **3.5 and 4.
+198 [mark]: ### Step 3 — Average Customer Rating |  | Calculate the average customer rating across all products.
+199 [code]: average_rating = df["ratings"].mean() |  | print(f"Average Rating: {average_rating:.2f}")
+200 [mark]: ### Observation |  | The average customer rating across all products is **3.98 out of 5**. |  | This
+201 [mark]: ### Business Insight |  | The analysis indicates that the majority of products receive favorable cus
+202 [mark]: ### Recommendation |  | Myntra should continue monitoring customer ratings to identify products with
+203 [mark]: ### Business Decision |  | Use customer ratings as a key performance indicator when evaluating produ
+204 [mark]: ### Conclusion |  | The overall customer rating distribution indicates that Myntra maintains a high 
+205 [mark]: # Business Question 4 |  | ## Does Product Price Influence Customer Ratings? |  | Customers often as
+206 [mark]: ### Business Objective |  | Analyze whether product price influences customer satisfaction by compar
+207 [mark]: ### Why is this analysis important? |  | Understanding the relationship between product price and cu
+208 [mark]: ### Step 1 — Calculate Correlation |  | Calculate the Pearson correlation coefficient between produc
+209 [code]: correlation = df["price"].corr(df["ratings"]) |  | print(f"Correlation: {correlation:.3f}")
+210 [mark]: ### Observation |  | The Pearson correlation coefficient between **product price** and **customer ra
+211 [mark]: ### Step 2 — Create Price Categories |  | Group products into price categories to compare customer r
+212 [code]: df["Price_Category"] = pd.cut( |     df["price"], |     bins=[0,500,1000,2000,5000,df["price"].max()
+213 [mark]: ### Observation |  | The products have been grouped into five price categories to facilitate compari
+214 [mark]: ### Step 3 — Compare Customer Ratings Across Price Categories |  | Create a box plot to visualize th
+215 [code]: plt.figure(figsize=(12,7)) |  | sns.boxplot( |     data=df, |     x="Price_Category", |     y="ratin
+216 [mark]: ### Observation |  | The box plot shows that customer ratings are consistently high across all price
+217 [mark]: ### Recommendation |  | Myntra should continue maintaining product quality across all price segments
+218 [mark]: ### Business Decision |  | Use customer ratings together with product quality metrics when evaluatin
+219 [mark]: ### Conclusion |  | The analysis demonstrates that product price has only a **very weak positive rel
+220 [mark]: ### Business Objective |  | Analyze customer engagement across different price categories to determi
+221 [mark]: ### Why is this analysis important? |  | Understanding this relationship helps businesses evaluate w
+222 [mark]: ### Step 1 — Calculate Correlation |  | Calculate the Pearson correlation coefficient between produc
+223 [code]: correlation = df["price"].corr(df["number_of_ratings"]) |  | print(f"Correlation: {correlation:.3f}"
+224 [mark]: ### Observation |  | The Pearson correlation coefficient between **product price** and **customer en
+225 [mark]: ### Step 2 — Compare Customer Engagement Across Price Categories |  | Create a box plot to compare c
+226 [code]: plt.figure(figsize=(12,7)) |  | sns.boxplot( |     data=df, |     x="Price_Category", |     y="numbe
+227 [mark]: ### Observation |  | The box plot shows that customer engagement varies across all price categories,
+228 [mark]: ### Business Insight |  | The analysis suggests that customer engagement is largely independent of p
+229 [mark]: ### Recommendation |  | Myntra should focus on improving product visibility, customer experience, an
+230 [mark]: ### Business Decision |  | Evaluate customer engagement using multiple performance indicators instea
+231 [mark]: ### Conclusion |  | The analysis reveals an **extremely weak negative correlation (-0.037)** between
+232 [mark]: # Section D Summary |  | This section analyzed customer satisfaction and engagement across Myntra's 
