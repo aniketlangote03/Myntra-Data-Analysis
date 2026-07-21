@@ -241,16 +241,14 @@ streamlit run dashboard/app.py
 
 Opens a browser dashboard with price filters, brand rankings (Value Score, Business Performance Score), and segment analysis. Brand rankings default to **≥ 20 products per brand**, matching Notebook 5's reliability filter.
 
-**Live dashboard:** Deploy to [Streamlit Community Cloud](https://share.streamlit.io/) and add your app URL here after publishing.
-
 ### 7. Generate report deliverables (optional)
 
 ```bash
-pip install python-docx python-pptx
+pip install python-docx python-pptx docx2pdf
 python reports/generate_deliverables.py
 ```
 
-Generates `Myntra_Data_Analysis_Report.docx`, `Myntra_Data_Analysis_Presentation.pptx`, and (on Windows with Microsoft Word) an optional PDF export.
+Generates `Myntra_Data_Analysis_Report.docx`, `Myntra_Data_Analysis_Presentation.pptx`, and `Myntra_Data_Analysis_Report.pdf`.
 
 ## Future Improvements
 
@@ -259,19 +257,6 @@ Generates `Myntra_Data_Analysis_Report.docx`, `Myntra_Data_Analysis_Presentation
 - Expand analysis to **other product categories** (shirts, footwear, etc.).
 - Apply **machine learning** for price prediction and recommendation systems.
 - Automate data collection with scheduled web scraping pipelines.
-
-## Final Checklist
-
-- [x] Notebook 1 – Data Loading
-- [x] Notebook 2 – Data Quality Assessment
-- [x] Notebook 3 – Data Cleaning
-- [x] Notebook 4 – Exploratory Data Analysis
-- [x] Notebook 5 – Advanced Business Insights
-- [x] README.md
-- [x] Final Report (DOCX)
-- [x] PowerPoint Presentation
-- [x] Streamlit Dashboard
-- [x] GitHub Repository
 
 ## License
 
