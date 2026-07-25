@@ -4,6 +4,8 @@
 
 ![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-150458?logo=pandas&logoColor=white)
+![Plotly](https://img.shields.io/badge/Plotly-Interactive%20Charts-3F4F75?logo=plotly&logoColor=white)
+![Power BI](https://img.shields.io/badge/Power%20BI-Dashboard-F2C811?logo=powerbi&logoColor=black)
 ![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?logo=streamlit&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-orange)
 ![Status](https://img.shields.io/badge/Project-Completed-success)
@@ -16,9 +18,56 @@ An end-to-end data analytics project analyzing Myntra's men's jeans product cata
 
 - **52,120 Raw Records Cleaned:** Handled missing data, deduplicated 17,047 duplicate listings, and cleaned scraper scale anomalies down to 31,527 high-quality records.
 - **5 Structured Analytics Notebooks:** Modular end-to-end pipeline following data loading, quality assessment, cleaning, EDA, and advanced business insights.
+- **Interactive HTML Dashboard:** A data-driven web dashboard built with Plotly, powered by real data extracted via Python — 7 KPI cards, 6 interactive charts, and dynamic tables.
 - **Interactive Streamlit Dashboard:** Built a real-time web application (`dashboard/app.py`) for filtering brands, price tiers, and performance scores.
 - **Composite Scoring Models:** Developed Value Score and Business Performance Score to rank 371 brands objectively.
 - **Automated Deliverables:** Python automation (`reports/generate_deliverables.py`) producing executive DOCX report, PPTX presentation, and PDF export.
+
+## Dashboards
+
+### Interactive HTML Dashboard
+
+This project includes a standalone HTML dashboard built with **Plotly.js** that visualizes key insights from the cleaned Myntra dataset. The dashboard is powered by `dashboard_data.json`, which is generated from the actual CSV data using Python (Pandas) — no simulated or hardcoded values.
+
+![HTML Dashboard Preview](images/html_dashboard.png)
+
+**Features:**
+- 7 KPI cards (Products, Brands, Avg Price, Median Price, Avg Discount, Avg Rating, Total Reviews)
+- Price distribution histogram with box plot
+- Top 15 brands by product count (color-coded by rating)
+- Product mix by price band with discount overlay
+- Discount spread box plots across price bands
+- Top 10 brands by average rating
+- Scatter plot: Price vs Rating vs Discount vs Review volume (2,000 sampled products)
+- Brand performance table and top-rated products table
+
+> To view the dashboard, open `dashboard/index.html` in any modern browser, or run a local server:
+> ```bash
+> cd dashboard && python -m http.server 8080
+> ```
+
+### Power BI Dashboard
+
+A professional business intelligence dashboard built with **Power BI Desktop**, designed for stakeholder-facing analytics.
+
+<!-- ![Power BI Dashboard Preview](images/powerbi_dashboard.png) -->
+
+**Features:**
+- KPI cards for key metrics
+- Interactive slicers for brand, price segment, and rating
+- Brand performance comparison
+- Price distribution and discount analysis
+- DAX measures for calculated metrics
+
+> Open `dashboard/Myntra_Dashboard.pbix` in Power BI Desktop to explore the interactive dashboard.
+
+### Streamlit Dashboard
+
+A real-time interactive dashboard (`dashboard/app.py`) with sidebar filters for price segments, minimum product thresholds, and brand ranking criteria.
+
+```bash
+streamlit run dashboard/app.py
+```
 
 ## Key Visualizations
 
@@ -61,6 +110,7 @@ This project analyzes a scraped dataset of Myntra men's jeans listings to suppor
 - **Price range:** ₹337 – ₹54,000
 - **Average rating:** 3.98 / 5
 - **Average discount:** ~50% (stored as decimal 0–1)
+- **Total customer reviews:** 3,311,676
 
 ## Project Structure
 
@@ -78,33 +128,45 @@ Myntra-Data-Analysis/
 │   ├── 04_Exploratory_Data_Analysis.ipynb
 │   └── 05_Advanced_Business_Insights.ipynb
 │
+├── dashboard/
+│   ├── index.html                       # Interactive HTML dashboard (Plotly)
+│   ├── dashboard_data.json              # Auto-generated data for HTML dashboard
+│   ├── generate_dashboard_data.py       # Python script: CSV → JSON
+│   ├── app.py                           # Streamlit interactive dashboard
+│   └── assets/
+│       └── style.css                    # Dashboard stylesheet
+│
 ├── images/                              # Exported charts and visualizations
+│
 ├── scripts/
+│   ├── generate_key_charts.py           # Export key charts to images/
 │   ├── fix_notebooks.py                 # Notebook cleanup utility
 │   ├── fix_all_notebooks.py             # Fix text errors across notebooks
 │   ├── rebuild_nb04.py                  # Lean EDA notebook builder
 │   ├── consolidate_nb04.py              # Legacy NB4 duplicate removal
-│   ├── strip_outputs.py                 # Clear notebook outputs before commit
-│   └── generate_key_charts.py           # Export key charts to images/
+│   └── strip_outputs.py                 # Clear notebook outputs before commit
+│
 ├── reports/
 │   ├── Myntra_Data_Analysis_Report.docx # Final written report (Word)
 │   ├── Myntra_Data_Analysis_Report.pdf  # Executive report (PDF export)
 │   └── Myntra_Data_Analysis_Presentation.pptx # Presentation deck
 │
-├── dashboard/
-│   └── app.py                           # Streamlit interactive dashboard
 ├── README.md
 ├── requirements.txt
-└── .gitignore
+├── .gitignore
+└── LICENSE
 ```
 
 ## Technologies Used
 
-- **Python 3.12**
+- **Python 3.12** – Core language for data processing
 - **pandas** – Data manipulation and analysis
 - **NumPy** – Numerical operations
-- **Matplotlib & Seaborn** – Data visualization
-- **Streamlit & Plotly** – Interactive dashboard
+- **Matplotlib & Seaborn** – Static data visualization
+- **Plotly** – Interactive charts (HTML dashboard & Streamlit)
+- **Power BI** – Business intelligence dashboard with DAX measures and interactive slicers
+- **Streamlit** – Interactive web dashboard application
+- **HTML / CSS / JavaScript** – Standalone HTML dashboard
 - **Jupyter Notebook / JupyterLab** – Interactive analysis environment
 
 ## Skills Demonstrated
@@ -113,7 +175,8 @@ Myntra-Data-Analysis/
 - **Exploratory Data Analysis (EDA):** Univariate/bivariate distribution analysis, price segmentation, metric aggregations.
 - **Data Visualization:** Custom Seaborn, Matplotlib, and Plotly interactive charts.
 - **Feature Engineering & Composite Scoring:** Min-max normalization and multi-criteria weighted scoring (Value Score & Business Performance Score).
-- **Interactive Web Dashboarding:** Building Streamlit apps with responsive filters, metric KPIs, and dynamic Plotly plots.
+- **Interactive Web Dashboarding:** HTML/CSS/JS dashboard with Plotly, plus Streamlit apps with responsive filters.
+- **Data Pipeline Design:** Python script to extract, transform, and export data as JSON for front-end consumption.
 - **Executive Communication:** Automated report generation (DOCX/PDF/PPTX) and actionable data storytelling.
 
 ## Business Questions
@@ -233,7 +296,19 @@ Open and execute notebooks sequentially from `notebooks/`:
 python scripts/generate_key_charts.py
 ```
 
-### 6. Launch the interactive dashboard
+### 6. Launch the HTML dashboard
+
+```bash
+# Regenerate data from CSV (run after any data changes)
+python dashboard/generate_dashboard_data.py
+
+# Serve the dashboard locally
+cd dashboard && python -m http.server 8080
+```
+
+Open [http://localhost:8080](http://localhost:8080) in your browser.
+
+### 7. Launch the Streamlit dashboard
 
 ```bash
 streamlit run dashboard/app.py
@@ -241,7 +316,7 @@ streamlit run dashboard/app.py
 
 Opens a browser dashboard with price filters, brand rankings (Value Score, Business Performance Score), and segment analysis. Brand rankings default to **≥ 20 products per brand**, matching Notebook 5's reliability filter.
 
-### 7. Generate report deliverables (optional)
+### 8. Generate report deliverables (optional)
 
 ```bash
 pip install python-docx python-pptx docx2pdf
@@ -257,6 +332,7 @@ Generates `Myntra_Data_Analysis_Report.docx`, `Myntra_Data_Analysis_Presentation
 - Expand analysis to **other product categories** (shirts, footwear, etc.).
 - Apply **machine learning** for price prediction and recommendation systems.
 - Automate data collection with scheduled web scraping pipelines.
+- Add **interactive filters** (brand dropdown, price slider, rating filter) to the HTML dashboard.
 
 ## License
 

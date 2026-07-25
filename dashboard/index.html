@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Myntra Men's Jeans Catalog Dashboard</title>
+  <meta name="description" content="Interactive analytics dashboard for the Myntra Men's Jeans catalog — pricing, ratings, discounts, and brand performance visualized with Plotly.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <!-- Header Banner -->
+  <div class="header-banner">
+    <h1>Myntra Men's Jeans Catalog Dashboard</h1>
+    <p>Cleaned catalog analysis covering assortment, pricing, discounts, ratings, and review engagement.</p>
+  </div>
+
+  <!-- KPI Metrics (populated by JS) -->
+  <div class="kpi-grid" id="kpi-grid">
+    <div class="kpi-card"><div class="kpi-title">PRODUCTS</div><div class="kpi-value" id="kpi-products">—</div></div>
+    <div class="kpi-card"><div class="kpi-title">BRANDS</div><div class="kpi-value" id="kpi-brands">—</div></div>
+    <div class="kpi-card"><div class="kpi-title">AVG SELLING PRICE</div><div class="kpi-value" id="kpi-avg-price">—</div></div>
+    <div class="kpi-card"><div class="kpi-title">MEDIAN SELLING PRICE</div><div class="kpi-value" id="kpi-median-price">—</div></div>
+    <div class="kpi-card"><div class="kpi-title">AVG DISCOUNT</div><div class="kpi-value" id="kpi-avg-discount">—</div></div>
+    <div class="kpi-card"><div class="kpi-title">AVG RATING</div><div class="kpi-value" id="kpi-avg-rating">—</div></div>
+    <div class="kpi-card"><div class="kpi-title">TOTAL REVIEWS</div><div class="kpi-value" id="kpi-total-reviews">—</div></div>
+  </div>
+
+  <!-- Executive Summary (populated by JS) -->
+  <div class="dashboard-card">
+    <div class="card-title">Executive summary</div>
+    <div class="summary-list" id="exec-summary">
+      <div class="loading-overlay"><span class="spinner"></span> Loading data…</div>
+    </div>
+  </div>
+
+  <!-- Row 1: Price Distribution + Top 15 Brands -->
+  <div class="charts-row-2">
+    <div class="dashboard-card">
+      <div class="card-title">Price distribution</div>
+      <div id="chart-price-dist" class="chart-container"></div>
+    </div>
+    <div class="dashboard-card">
+      <div class="card-title">Top 15 brands by number of products</div>
+      <div id="chart-top-brands" class="chart-container"></div>
+    </div>
+  </div>
+
+  <!-- Row 2: Product Mix + Discount Spread -->
+  <div class="charts-row-2">
+    <div class="dashboard-card">
+      <div class="card-title">Product mix by price band</div>
+      <div id="chart-product-mix" class="chart-container"></div>
+    </div>
+    <div class="dashboard-card">
+      <div class="card-title">Discount spread across price bands</div>
+      <div id="chart-discount-spread" class="chart-container"></div>
+    </div>
+  </div>
+
+  <!-- Row 3: Top 10 by Rating + Scatter -->
+  <div class="charts-row-2">
+    <div class="dashboard-card">
+      <div class="card-title">Top 10 brands by average rating</div>
+      <div id="chart-top-rating" class="chart-container"></div>
+    </div>
+    <div class="dashboard-card">
+      <div class="card-title">Price, rating, discount, and review volume</div>
+      <div id="chart-scatter" class="chart-container"></div>
+    </div>
+  </div>
+
+  <!-- Brand Performance Table -->
+  <div class="dashboard-card">
+    <div class="card-title">Brand performance snapshot</div>
+    <div class="data-table-container">
+      <table class="data-table" id="brand-table">
+        <thead>
+          <tr>
+            <th>Brand</th>
+            <th>Products</th>
+            <th>Avg Price</th>
+            <th>Avg Discount</th>
+            <th>Avg Rating</th>
+            <th>Total Reviews</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Top Rated Products Table -->
+  <div class="dashboard-card">
+    <div class="card-title">Highly rated products with strong review volume</div>
+    <div class="data-table-container">
+      <table class="data-table" id="products-table">
+        <thead>
+          <tr>
+            <th>Brand</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Discount %</th>
+            <th>Rating</th>
+            <th>Reviews</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer-note">
+    Dashboard generated from the cleaned Myntra dataset using Python (Pandas) and Plotly. Data is refreshed by running <code>generate_dashboard_data.py</code>.
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── Helpers ─────────────────────────────────────────────────── */
+  var fmt = {
+    int: function (n) { return n == null ? '—' : Number(n).toLocaleString('en-IN'); },
+    inr: function (n) { return n == null ? '—' : '\u20B9' + Number(n).toLocaleString('en-IN', { maximumFractionDigits: 0 }); },
+    pct: function (n) { return n == null ? '—' : n.toFixed(1) + '%'; },
+    rat: function (n) { return n == null ? '—' : n.toFixed(2) + '/5'; }
+  };
+
+  var plotlyConfig = { responsive: true, displayModeBar: false };
+  var CHART_BG = 'transparent';
+
+  /* ── Fetch JSON and render ───────────────────────────────────── */
+  fetch('dashboard_data.json')
+    .then(function (res) { return res.json(); })
+    .then(render)
+    .catch(function (err) {
+      document.getElementById('exec-summary').innerHTML =
+        '<div class="summary-item" style="border-left-color:#ef4444;">Failed to load data. Run <code>python scripts/generate_dashboard_data.py</code> first.</div>';
+      console.error(err);
+    });
+
+  function render(D) {
+    /* ── KPI Cards ───────────────────────────────────────────── */
+    var k = D.kpis;
+    document.getElementById('kpi-products').textContent      = fmt.int(k.total_products);
+    document.getElementById('kpi-brands').textContent         = fmt.int(k.total_brands);
+    document.getElementById('kpi-avg-price').textContent      = fmt.inr(k.avg_price);
+    document.getElementById('kpi-median-price').textContent   = fmt.inr(k.median_price);
+    document.getElementById('kpi-avg-discount').textContent   = fmt.pct(k.avg_discount_pct);
+    document.getElementById('kpi-avg-rating').textContent     = fmt.rat(k.avg_rating);
+    document.getElementById('kpi-total-reviews').textContent  = fmt.int(k.total_reviews);
+
+    /* ── Executive Summary ───────────────────────────────────── */
+    var summaryHTML = [
+      'The catalog contains <strong>' + fmt.int(k.total_products) + '</strong> products across <strong>' + fmt.int(k.total_brands) + '</strong> brands, with a median selling price of <strong>' + fmt.inr(k.median_price) + '</strong>.',
+      'Average discount is <strong>' + fmt.pct(k.avg_discount_pct) + '</strong>, creating average savings of <strong>' + fmt.inr(k.avg_price * k.avg_discount_pct / (100 - k.avg_discount_pct)) + '</strong> per item versus MRP.',
+      'Average rating is <strong>' + fmt.rat(k.avg_rating) + '</strong> with <strong>' + fmt.int(k.total_reviews) + '</strong> total customer reviews across all products.',
+      'The largest brand by assortment is <strong>' + D.top_brands.names[D.top_brands.names.length - 1] + '</strong> with <strong>' + fmt.int(D.top_brands.counts[D.top_brands.counts.length - 1]) + '</strong> products.'
+    ].map(function (t) { return '<div class="summary-item">' + t + '</div>'; }).join('');
+    document.getElementById('exec-summary').innerHTML = summaryHTML;
+
+    /* ── 1. Price Distribution (Histogram + Box) ─────────────── */
+    Plotly.newPlot('chart-price-dist', [
+      {
+        x: D.price_distribution,
+        type: 'histogram',
+        name: 'Products',
+        marker: { color: '#3b82f6' },
+        xbins: { start: 0, end: 55000, size: 2000 },
+        hovertemplate: 'Price=%{x}<br>Count=%{y}<extra></extra>'
+      },
+      {
+        x: D.price_distribution,
+        type: 'box',
+        name: ' ',
+        marker: { color: '#4f46e5' },
+        yaxis: 'y2'
+      }
+    ], {
+      margin: { l: 50, r: 20, t: 10, b: 45 },
+      showlegend: false,
+      xaxis: { title: 'Selling price (\u20B9)' },
+      yaxis: { title: 'Products', domain: [0, 0.78] },
+      yaxis2: { domain: [0.82, 1], showticklabels: false },
+      paper_bgcolor: CHART_BG, plot_bgcolor: CHART_BG
+    }, plotlyConfig);
+
+    /* ── 2. Top 15 Brands by Product Count ───────────────────── */
+    Plotly.newPlot('chart-top-brands', [{
+      y: D.top_brands.names,
+      x: D.top_brands.counts,
+      customdata: D.top_brands.ratings,
+      type: 'bar',
+      orientation: 'h',
+      marker: {
+        color: D.top_brands.ratings,
+        colorscale: 'Viridis',
+        colorbar: { title: 'Rating', len: 0.9 }
+      },
+      hovertemplate: 'Products=%{x}<br>Brand=%{y}<br>Avg rating=%{customdata}<extra></extra>'
+    }], {
+      margin: { l: 160, r: 65, t: 10, b: 45 },
+      xaxis: { title: 'Products' },
+      yaxis: { automargin: true },
+      paper_bgcolor: CHART_BG, plot_bgcolor: CHART_BG
+    }, plotlyConfig);
+
+    /* ── 3. Product Mix by Price Band ────────────────────────── */
+    Plotly.newPlot('chart-product-mix', [{
+      x: D.price_mix.bands,
+      y: D.price_mix.counts,
+      customdata: D.price_mix.avg_discount,
+      type: 'bar',
+      text: D.price_mix.counts.map(function (c) { return c.toLocaleString(); }),
+      textposition: 'inside',
+      marker: {
+        color: D.price_mix.avg_discount,
+        colorscale: 'Blues',
+        reversescale: false,
+        colorbar: { title: 'Discount %' }
+      },
+      hovertemplate: 'Price band=%{x}<br>Products=%{y}<br>Avg discount %=%{customdata}<extra></extra>'
+    }], {
+      margin: { l: 50, r: 65, t: 10, b: 45 },
+      xaxis: { title: 'Price band' },
+      yaxis: { title: 'Products' },
+      paper_bgcolor: CHART_BG, plot_bgcolor: CHART_BG
+    }, plotlyConfig);
+
+    /* ── 4. Discount Spread (Box Plots) ──────────────────────── */
+    var bandColors = ['#818cf8', '#ef4444', '#10b981', '#c084fc'];
+    var bandOrder = D.price_mix.bands;
+    var boxTraces = bandOrder.map(function (band, idx) {
+      return {
+        y: D.discount_box[band] || [],
+        name: band,
+        type: 'box',
+        boxpoints: false,
+        marker: { color: bandColors[idx % bandColors.length] }
+      };
+    });
+    Plotly.newPlot('chart-discount-spread', boxTraces, {
+      margin: { l: 50, r: 20, t: 10, b: 45 },
+      showlegend: false,
+      xaxis: { title: 'Price band' },
+      yaxis: { title: 'Discount %', range: [-5, 105] },
+      paper_bgcolor: CHART_BG, plot_bgcolor: CHART_BG
+    }, plotlyConfig);
+
+    /* ── 5. Top 10 Brands by Average Rating ──────────────────── */
+    Plotly.newPlot('chart-top-rating', [{
+      y: D.top_brands_by_rating.names,
+      x: D.top_brands_by_rating.ratings,
+      customdata: D.top_brands_by_rating.counts,
+      type: 'bar',
+      orientation: 'h',
+      marker: {
+        color: D.top_brands_by_rating.ratings,
+        colorscale: [[0, '#fde68a'], [0.5, '#f59e0b'], [1, '#d97706']],
+        colorbar: { title: 'Rating', len: 0.9 }
+      },
+      text: D.top_brands_by_rating.ratings.map(function (r) { return r.toFixed(2); }),
+      textposition: 'outside',
+      hovertemplate: 'Brand=%{y}<br>Avg rating=%{x}<br>Products=%{customdata}<extra></extra>'
+    }], {
+      margin: { l: 160, r: 65, t: 10, b: 45 },
+      xaxis: { title: 'Average rating', range: [3.5, 4.6] },
+      yaxis: { automargin: true },
+      paper_bgcolor: CHART_BG, plot_bgcolor: CHART_BG
+    }, plotlyConfig);
+
+    /* ── 6. Scatter Plot ─────────────────────────────────────── */
+    var sc = D.scatter;
+    var scatterCustom = sc.prices.map(function (_, i) {
+      return [sc.brands[i], sc.num_ratings[i], sc.descriptions[i], sc.mrp[i], sc.discount_pct[i]];
+    });
+    Plotly.newPlot('chart-scatter', [{
+      x: sc.prices,
+      y: sc.ratings,
+      customdata: scatterCustom,
+      mode: 'markers',
+      marker: {
+        size: sc.num_ratings,
+        sizemode: 'diameter',
+        sizeref: 12,
+        sizemin: 3,
+        color: sc.discount_pct,
+        colorscale: 'Jet',
+        colorbar: { title: 'Discount %' },
+        opacity: 0.5
+      },
+      hoverlabel: {
+        bgcolor: '#000000',
+        font: { color: '#ffffff', family: 'Inter, sans-serif' },
+        bordercolor: '#000000'
+      },
+      hovertemplate:
+        '<b>%{customdata[0]}</b><br><br>' +
+        'Selling price (\u20B9)=%{x}<br>' +
+        'Rating=%{y}<br>' +
+        'Reviews=%{customdata[1]}<br>' +
+        'Description=%{customdata[2]}<br>' +
+        'MRP=%{customdata[3]}<br>' +
+        'Discount %=%{customdata[4]}<extra></extra>'
+    }], {
+      margin: { l: 50, r: 65, t: 10, b: 45 },
+      xaxis: { title: 'Selling price (\u20B9)' },
+      yaxis: { title: 'Rating', range: [1.2, 5.2] },
+      paper_bgcolor: CHART_BG, plot_bgcolor: CHART_BG
+    }, plotlyConfig);
+
+    /* ── Brand Performance Table ──────────────────────────────── */
+    var brandTbody = document.querySelector('#brand-table tbody');
+    D.brand_table.forEach(function (b) {
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td>' + b.brand + '</td>' +
+        '<td>' + fmt.int(b.products) + '</td>' +
+        '<td>' + fmt.inr(b.avg_price) + '</td>' +
+        '<td>' + fmt.pct(b.avg_discount) + '</td>' +
+        '<td>' + b.avg_rating.toFixed(2) + '/5</td>' +
+        '<td>' + fmt.int(b.total_reviews) + '</td>';
+      brandTbody.appendChild(tr);
+    });
+
+    /* ── Top Rated Products Table ─────────────────────────────── */
+    var prodTbody = document.querySelector('#products-table tbody');
+    D.top_products.forEach(function (p) {
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td>' + p.brand + '</td>' +
+        '<td>' + p.description + '</td>' +
+        '<td>' + fmt.inr(p.price) + '</td>' +
+        '<td>' + fmt.pct(p.discount_pct) + '</td>' +
+        '<td>' + p.rating.toFixed(1) + '/5</td>' +
+        '<td>' + fmt.int(p.num_ratings) + '</td>';
+      prodTbody.appendChild(tr);
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
