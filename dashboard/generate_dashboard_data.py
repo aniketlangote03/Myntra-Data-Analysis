@@ -216,7 +216,7 @@ def main() -> None:
     print(f"[OK] Generated {OUTPUT_PATH.relative_to(ROOT)}  ({size_kb:.0f} KB)")
     print(f"   Products : {kpis['total_products']:,}")
     print(f"   Brands   : {kpis['total_brands']}")
-    print(f"   Avg Price: ₹{kpis['avg_price']:,.0f}")
+    print(f"   Avg Price: INR {kpis['avg_price']:,.0f}")
     print(f"   Avg Disc : {kpis['avg_discount_pct']}%")
     print(f"   Avg Rate : {kpis['avg_rating']}")
     print(f"   Reviews  : {kpis['total_reviews']:,}")
