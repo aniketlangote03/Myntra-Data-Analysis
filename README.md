@@ -5,14 +5,36 @@
 ![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-150458?logo=pandas&logoColor=white)
 ![Plotly](https://img.shields.io/badge/Plotly-Interactive%20Charts-3F4F75?logo=plotly&logoColor=white)
-![Power BI](https://img.shields.io/badge/Power%20BI-Dashboard-F2C811?logo=powerbi&logoColor=black)
+![Power BI](https://img.shields.io/badge/Power%20BI-Analytics-F2C811?logo=powerbi&logoColor=black)
 ![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?logo=streamlit&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-orange)
 ![Status](https://img.shields.io/badge/Project-Completed-success)
 
 An end-to-end data analytics project analyzing Myntra's men's jeans product catalog to uncover pricing trends, brand performance, discount strategies, and customer engagement patterns.
 
-> **Note:** Do not commit the `venv/` folder — it is listed in `.gitignore`. Always create a local virtual environment after cloning.
+---
+
+## Table of Contents
+
+- [Project Highlights](#project-highlights)
+- [Dashboards](#dashboards)
+  - [Interactive HTML Dashboard](#interactive-html-dashboard)
+  - [Power BI Dashboard Overview](#power-bi-dashboard-overview)
+  - [Streamlit Dashboard](#streamlit-dashboard)
+- [Key Visualizations](#key-visualizations)
+- [Project Overview](#project-overview)
+- [Dataset Information](#dataset-information)
+- [Project Structure](#project-structure)
+- [Technologies Used](#technologies-used)
+- [Skills Demonstrated](#skills-demonstrated)
+- [Business Questions](#business-questions)
+- [Key Findings](#key-findings)
+- [Methodology](#methodology)
+- [How to Run the Project](#how-to-run-the-project)
+- [Future Improvements](#future-improvements)
+- [License & Usage](#license--usage)
+
+---
 
 ## Project Highlights
 
@@ -22,6 +44,8 @@ An end-to-end data analytics project analyzing Myntra's men's jeans product cata
 - **Interactive Streamlit Dashboard:** Built a real-time web application (`dashboard/app.py`) for filtering brands, price tiers, and performance scores.
 - **Composite Scoring Models:** Developed Value Score and Business Performance Score to rank 371 brands objectively.
 - **Automated Deliverables:** Python automation (`reports/generate_deliverables.py`) producing executive DOCX report, PPTX presentation, and PDF export.
+
+---
 
 ## Dashboards
 
@@ -46,20 +70,18 @@ This project includes a standalone HTML dashboard built with **Plotly.js** that 
 > cd dashboard && python -m http.server 8080
 > ```
 
-### Power BI Dashboard
+### Power BI Dashboard Overview
 
-A professional business intelligence dashboard built with **Power BI Desktop**, designed for stakeholder-facing analytics.
+A business intelligence dashboard concept designed for stakeholder-facing executive reporting.
 
-<!-- ![Power BI Dashboard Preview](images/powerbi_dashboard.png) -->
+*(Note: Power BI metrics and visuals are mirrored in the web and Streamlit dashboards; `.pbix` source files are maintained separately for desktop reporting.)*
 
-**Features:**
-- KPI cards for key metrics
-- Interactive slicers for brand, price segment, and rating
-- Brand performance comparison
-- Price distribution and discount analysis
-- DAX measures for calculated metrics
-
-> Open `dashboard/Myntra_Dashboard.pbix` in Power BI Desktop to explore the interactive dashboard.
+**Key Features & Metrics:**
+- Executive KPI summary cards
+- Interactive slicers for brand, price segment, and rating range
+- Head-to-head brand performance comparison
+- Price distribution and promotional discount depth matrix
+- Calculated DAX measures for weighted ratings and engagement indices
 
 ### Streamlit Dashboard
 
@@ -69,17 +91,23 @@ A real-time interactive dashboard (`dashboard/app.py`) with sidebar filters for 
 streamlit run dashboard/app.py
 ```
 
+---
+
 ## Key Visualizations
 
 | Price Distribution | Brand Engagement | Price Segments |
 |:---:|:---:|:---:|
 | ![Price distribution](images/price_distribution.png) | ![Top brands by engagement](images/top_brands_engagement.png) | ![Products by price segment](images/price_segments.png) |
 
+---
+
 ## Project Overview
 
 This project analyzes a scraped dataset of Myntra men's jeans listings to support data-driven business decisions around pricing, merchandising, marketing, and brand partnerships. The workflow follows a standard analytics pipeline: data loading, quality assessment, cleaning, exploratory analysis, and advanced business insights.
 
 **Business objective:** Identify pricing trends, brand performance, discount strategies, customer preferences, and product popularity to improve pricing, marketing, and customer satisfaction on Myntra's platform.
+
+---
 
 ## Dataset Information
 
@@ -112,6 +140,8 @@ This project analyzes a scraped dataset of Myntra men's jeans listings to suppor
 - **Average discount:** ~50% (stored as decimal 0–1)
 - **Total customer reviews:** 3,311,676
 
+---
+
 ## Project Structure
 
 ```
@@ -140,11 +170,9 @@ Myntra-Data-Analysis/
 │
 ├── scripts/
 │   ├── generate_key_charts.py           # Export key charts to images/
-│   ├── fix_notebooks.py                 # Notebook cleanup utility
-│   ├── fix_all_notebooks.py             # Fix text errors across notebooks
-│   ├── rebuild_nb04.py                  # Lean EDA notebook builder
-│   ├── consolidate_nb04.py              # Legacy NB4 duplicate removal
 │   └── strip_outputs.py                 # Clear notebook outputs before commit
+│
+├── dev/                                 # Internal patch & build utilities
 │
 ├── reports/
 │   ├── Myntra_Data_Analysis_Report.docx # Final written report (Word)
@@ -157,6 +185,8 @@ Myntra-Data-Analysis/
 └── LICENSE
 ```
 
+---
+
 ## Technologies Used
 
 - **Python 3.12** – Core language for data processing
@@ -164,10 +194,11 @@ Myntra-Data-Analysis/
 - **NumPy** – Numerical operations
 - **Matplotlib & Seaborn** – Static data visualization
 - **Plotly** – Interactive charts (HTML dashboard & Streamlit)
-- **Power BI** – Business intelligence dashboard with DAX measures and interactive slicers
 - **Streamlit** – Interactive web dashboard application
 - **HTML / CSS / JavaScript** – Standalone HTML dashboard
 - **Jupyter Notebook / JupyterLab** – Interactive analysis environment
+
+---
 
 ## Skills Demonstrated
 
@@ -178,6 +209,8 @@ Myntra-Data-Analysis/
 - **Interactive Web Dashboarding:** HTML/CSS/JS dashboard with Plotly, plus Streamlit apps with responsive filters.
 - **Data Pipeline Design:** Python script to extract, transform, and export data as JSON for front-end consumption.
 - **Executive Communication:** Automated report generation (DOCX/PDF/PPTX) and actionable data storytelling.
+
+---
 
 ## Business Questions
 
@@ -197,6 +230,8 @@ Myntra-Data-Analysis/
 4. Which price segment performs best?
 5. Which brands should Myntra prioritize?
 
+---
+
 ## Key Findings
 
 ### Data Quality & Cleaning
@@ -215,6 +250,8 @@ Myntra-Data-Analysis/
 - **Highest engagement efficiency:** HIGHLANDER leads in ratings per product; Roadster leads in total ratings.
 - **Mid-price segment (₹1,001–2,000)** is the core of the catalog with strongest engagement.
 - **Top priority brands:** HIGHLANDER, HARDSODA, Sztori, THE BEETEL HOUSE (Business Performance Score).
+
+---
 
 ## Methodology
 
@@ -245,6 +282,8 @@ Key metrics are min-max normalized to [0, 1], then weighted:
 
 This composite score ranks brands for merchandising and partnership prioritization.
 
+---
+
 ## How to Run the Project
 
 ### 1. Clone the repository
@@ -255,6 +294,8 @@ cd Myntra-Data-Analysis
 ```
 
 ### 2. Create and activate a virtual environment
+
+> **Note:** Do not commit the `venv/` folder — it is excluded by `.gitignore`. Always create a local virtual environment after cloning.
 
 ```bash
 python -m venv venv
@@ -319,11 +360,13 @@ Opens a browser dashboard with price filters, brand rankings (Value Score, Busin
 ### 8. Generate report deliverables (optional)
 
 ```bash
-pip install python-docx python-pptx docx2pdf
+pip install docx2pdf
 python reports/generate_deliverables.py
 ```
 
-Generates `Myntra_Data_Analysis_Report.docx`, `Myntra_Data_Analysis_Presentation.pptx`, and `Myntra_Data_Analysis_Report.pdf`.
+*Note: `python-docx` and `python-pptx` are installed automatically via `requirements.txt`. Converting DOCX to PDF via `docx2pdf` requires Microsoft Word (Windows/macOS) or LibreOffice installed locally.*
+
+---
 
 ## Future Improvements
 
@@ -334,6 +377,9 @@ Generates `Myntra_Data_Analysis_Report.docx`, `Myntra_Data_Analysis_Presentation
 - Automate data collection with scheduled web scraping pipelines.
 - Add **interactive filters** (brand dropdown, price slider, rating filter) to the HTML dashboard.
 
-## License
+---
 
-This project is licensed under the [MIT License](LICENSE). Dataset sourced via web scraping; use in accordance with Myntra's terms of service.
+## License & Usage
+
+- **Code License:** The analytical pipeline, dashboard web applications, and python scripts in this repository are licensed under the [MIT License](LICENSE).
+- **Dataset Notice:** The product listing dataset was collected from public listings for educational and portfolio demonstration purposes. Please use in accordance with Myntra's terms of service.

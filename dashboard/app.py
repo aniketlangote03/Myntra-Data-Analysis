@@ -18,6 +18,12 @@ COLOR_PALETTE = ["#E62E5C", "#2E86AB", "#28A745", "#F18F01", "#7209B7", "#4CC9F0
 
 @st.cache_data
 def load_data() -> pd.DataFrame:
+    if not DATA_PATH.exists():
+        st.error(
+            f"❌ **Dataset not found at `{DATA_PATH}`.**\n\n"
+            "Please run **Notebook 03 (Data Cleaning)** first to generate `data/myntra_cleaned.csv`."
+        )
+        st.stop()
     df = pd.read_csv(DATA_PATH)
     df["price_segment"] = pd.cut(df["price"], bins=PRICE_BINS, labels=PRICE_LABELS)
     df["discount_display"] = df["discount_percent"] * 100

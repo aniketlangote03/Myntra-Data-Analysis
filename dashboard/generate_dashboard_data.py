@@ -46,6 +46,11 @@ def _safe(v):
 
 
 def main() -> None:
+    if not DATA_PATH.exists():
+        print(f"[ERROR] Dataset file not found at: {DATA_PATH}")
+        print("Please run Notebook 03 (Data Cleaning) or place myntra_cleaned.csv in the data/ directory.")
+        return
+
     df = pd.read_csv(DATA_PATH)
 
     # --- Derived columns ------------------------------------------------

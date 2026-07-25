@@ -138,11 +138,16 @@
 
   /* ── Fetch JSON and render ───────────────────────────────────── */
   fetch('dashboard_data.json')
-    .then(function (res) { return res.json(); })
+    .then(function (res) {
+      if (!res.ok) {
+        throw new Error('HTTP error ' + res.status + ' loading dashboard_data.json');
+      }
+      return res.json();
+    })
     .then(render)
     .catch(function (err) {
       document.getElementById('exec-summary').innerHTML =
-        '<div class="summary-item" style="border-left-color:#ef4444;">Failed to load data. Run <code>python scripts/generate_dashboard_data.py</code> first.</div>';
+        '<div class="summary-item" style="border-left-color:#ef4444;">Failed to load data (' + (err.message || 'Error') + '). Run <code>python dashboard/generate_dashboard_data.py</code> first.</div>';
       console.error(err);
     });
 
@@ -158,9 +163,12 @@
     document.getElementById('kpi-total-reviews').textContent  = fmt.int(k.total_reviews);
 
     /* ── Executive Summary ───────────────────────────────────── */
+    var discountDenom = 100 - (k.avg_discount_pct || 0);
+    var avgSavings = discountDenom > 0 ? (k.avg_price * k.avg_discount_pct / discountDenom) : 0;
+
     var summaryHTML = [
       'The catalog contains <strong>' + fmt.int(k.total_products) + '</strong> products across <strong>' + fmt.int(k.total_brands) + '</strong> brands, with a median selling price of <strong>' + fmt.inr(k.median_price) + '</strong>.',
-      'Average discount is <strong>' + fmt.pct(k.avg_discount_pct) + '</strong>, creating average savings of <strong>' + fmt.inr(k.avg_price * k.avg_discount_pct / (100 - k.avg_discount_pct)) + '</strong> per item versus MRP.',
+      'Average discount is <strong>' + fmt.pct(k.avg_discount_pct) + '</strong>, creating average savings of <strong>' + fmt.inr(avgSavings) + '</strong> per item versus MRP.',
       'Average rating is <strong>' + fmt.rat(k.avg_rating) + '</strong> with <strong>' + fmt.int(k.total_reviews) + '</strong> total customer reviews across all products.',
       'The largest brand by assortment is <strong>' + D.top_brands.names[D.top_brands.names.length - 1] + '</strong> with <strong>' + fmt.int(D.top_brands.counts[D.top_brands.counts.length - 1]) + '</strong> products.'
     ].map(function (t) { return '<div class="summary-item">' + t + '</div>'; }).join('');

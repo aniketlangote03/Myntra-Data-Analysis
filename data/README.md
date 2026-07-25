@@ -21,9 +21,9 @@ Product listings scraped from **Myntra.com** — Men's Jeans category.
 - **17,047 duplicate rows** removed during cleaning.
 - **3,546 rows** with `discount_percent > 1` removed — these reflect an inconsistent scraper format (values 1.1–64.0) that cannot be reliably converted to decimal discounts.
 
-## Usage
+## Usage & License
 
-This dataset is provided for **educational and portfolio purposes only**. Use in accordance with Myntra's terms of service. Do not use for commercial scraping or redistribution without permission.
+This dataset is provided for **educational and portfolio demonstration purposes only**. All project analysis and automation code is open-sourced under the MIT License. Use data in accordance with Myntra's terms of service; do not use for commercial scraping or redistribution without permission.
 
 ## Regenerating Clean Data
 
