@@ -259,7 +259,7 @@ def generate_exact_powerbi_preview():
     # -------------------------------------------------------------
     # 4. SAVE POWER BI PREVIEW IMAGE
     # -------------------------------------------------------------
-    out_file = 'images/powerbi_dashboard.png'
+    out_file = 'images/powerbi_dashboard_v3.png'
     plt.savefig(out_file, dpi=200, bbox_inches='tight')
     plt.close()
     print(f"Exact Power BI layout preview saved to {out_file}")
