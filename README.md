@@ -58,7 +58,7 @@ The repository includes a dedicated Microsoft Power BI Desktop report file locat
 > **Power BI File Path:** [`PowerBi/Myntra Sales Analytics.pbix`](file:///d:/3rdsem%20project/Myntra-Data-Analysis/PowerBi/Myntra%20Sales%20Analytics.pbix)  
 > Open with **Microsoft Power BI Desktop** to explore interactive filters, custom DAX metrics, and brand breakdown visuals.
 
-![Power BI Dashboard Preview](images/powerbi_dashboard.png)
+![Power BI Dashboard Preview](images/powerbi_dashboard_v2.png)
 
 **Key Dashboard Features & Metrics:**
 - **Executive Summary KPI Cards:** Real-time view of catalog metrics including Total Products (31.5K), Total Brands (371), Average Selling Price (₹1,697), Median Price (₹1,484), Average Discount (~50%), and Total Customer Reviews (3.31M).
