@@ -182,11 +182,6 @@ Myntra-Data-Analysis/
 │   ├── generate_key_charts.py           # Automated chart exporter script
 │   └── strip_outputs.py                 # Jupyter notebook cleaning utility
 │
-├── reports/
-│   ├── Myntra_Data_Analysis_Report.docx # Executive Word report
-│   ├── Myntra_Data_Analysis_Report.pdf  # Executive PDF report
-│   └── Myntra_Data_Analysis_Presentation.pptx # Presentation deck
-│
 ├── SYNOPSIS.md                          # Project synopsis document
 ├── README.md                            # Comprehensive project documentation
 ├── requirements.txt                     # Python dependencies

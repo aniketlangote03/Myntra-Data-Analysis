@@ -33,7 +33,8 @@ desktop.ini
 # Internal review scripts (temporary)
 _review_*
 
-# Presentations (local-only)
+# Reports directory (local-only)
+reports/
 *.pptx
 
 # Large or generated files (optional)
