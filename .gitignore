@@ -33,6 +33,9 @@ desktop.ini
 # Internal review scripts (temporary)
 _review_*
 
+# Presentations (local-only)
+*.pptx
+
 # Large or generated files (optional)
 # Uncomment if you prefer not to commit the raw dataset
 # data/myntra_dataset_ByScraping.csv
