@@ -1,12 +1,19 @@
-# Virtual environment
-venv/
-.venv/
-env/
+# Raw / generated data
+data/raw/
+data/processed/
+*.csv
+!data/sample/*.csv
+*.xlsx
+*.parquet
 
 # Python
 __pycache__/
 *.py[cod]
-*$py.class
+.venv/
+venv/
+env/
+.env
+.env.local
 *.egg-info/
 dist/
 build/
@@ -15,28 +22,20 @@ build/
 .ipynb_checkpoints/
 *.ipynb_checkpoints
 
-# IDE
+# Generated reports / outputs
+reports/
+output/
+*.html
+*.pptx
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+desktop.ini
 .vscode/
 .idea/
 *.swp
 *.swo
 
-# OS
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# Environment variables
-.env
-.env.local
-
 # Internal review scripts (temporary)
 _review_*
-
-# Reports directory (local-only)
-reports/
-*.pptx
-
-# Large or generated files (optional)
-# Uncomment if you prefer not to commit the raw dataset
-# data/myntra_dataset_ByScraping.csv
