@@ -1,14 +1,3 @@
-# Raw / generated / large data (sample data in data/sample/ is tracked)
-data/*.csv
-!data/sample/*.csv
-data/*.xlsx
-data/*.parquet
-data/raw/
-data/processed/
-
-# Scratch / dev folder
-dev/
-
 # Python
 __pycache__/
 *.py[cod]
@@ -24,6 +13,9 @@ build/
 # Jupyter
 .ipynb_checkpoints/
 *.ipynb_checkpoints
+
+# Scratch / dev folder
+dev/
 
 # PowerBI temporary files
 *.pbix.bak
@@ -43,5 +35,5 @@ desktop.ini
 *.swp
 *.swo
 
-# Internal review scripts (temporary)
+# Temporary review scripts
 _review_*
