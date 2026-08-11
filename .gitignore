@@ -1,26 +1,47 @@
-# Raw / generated data
+# Raw / generated / large data (sample data in data/sample/ is tracked)
+data/*.csv
+!data/sample/*.csv
+data/*.xlsx
+data/*.parquet
 data/raw/
 data/processed/
-*.csv
-*.xlsx
-*.parquet
+
+# Scratch / dev folder
+dev/
 
 # Python
 __pycache__/
 *.py[cod]
 .venv/
 venv/
+env/
 .env
+.env.local
+*.egg-info/
+dist/
+build/
 
 # Jupyter
 .ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# PowerBI temporary files
+*.pbix.bak
 
 # Generated reports / outputs
 reports/
 output/
 *.html
+*.pptx
 
 # OS / IDE
 .DS_Store
+Thumbs.db
+desktop.ini
 .vscode/
 .idea/
+*.swp
+*.swo
+
+# Internal review scripts (temporary)
+_review_*
