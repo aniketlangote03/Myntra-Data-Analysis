@@ -52,20 +52,21 @@ An end-to-end data analytics and business intelligence project analyzing Myntra'
 
 ### 1. Power BI Dashboard (`PowerBi/`)
 
-The repository includes a dedicated Microsoft Power BI Desktop report file located at [`PowerBi/Myntra Sales Analytics.pbix`](file:///d:/3rdsem%20project/Myntra-Data-Analysis/PowerBi/Myntra%20Sales%20Analytics.pbix) designed for executive reporting and stakeholder decision-making.
+The repository includes a dedicated Microsoft Power BI Desktop report file located at [`PowerBi/Myntra Sales Analytics.pbix`](file:///d:/3rdsem%20project/Myntra-Data-Analysis/PowerBi/Myntra%20Sales%20Analytics.pbix) and an exported PDF report at [`PowerBi/Myntra Sales Analytics.pdf`](file:///d:/3rdsem%20project/Myntra-Data-Analysis/PowerBi/Myntra%20Sales%20Analytics.pdf) designed for executive reporting and stakeholder decision-making.
 
 > [!NOTE]  
-> **Power BI File Path:** [`PowerBi/Myntra Sales Analytics.pbix`](file:///d:/3rdsem%20project/Myntra-Data-Analysis/PowerBi/Myntra%20Sales%20Analytics.pbix)  
-> Open with **Microsoft Power BI Desktop** to explore interactive filters, custom DAX metrics, and brand breakdown visuals.
+> **Power BI File Path:** [`PowerBi/Myntra Sales Analytics.pbix`](file:///d:/3rdsem%20project/Myntra-Data-Analysis/PowerBi/Myntra%20Sales%20Analytics.pbix) | **PDF Export:** [`PowerBi/Myntra Sales Analytics.pdf`](file:///d:/3rdsem%20project/Myntra-Data-Analysis/PowerBi/Myntra%20Sales%20Analytics.pdf)  
+> Open with **Microsoft Power BI Desktop** or view the PDF export to explore interactive filters, custom DAX metrics, and comprehensive brand breakdown visuals.
 
-![Power BI Dashboard Preview](images/powerbi_dashboard_v4.png)
+![Power BI Dashboard Preview](images/myntra_powerbi_dashboard_final.png)
 
 **Key Dashboard Features & Metrics:**
-- **Executive Summary KPI Cards:** Real-time view of catalog metrics including Total Products (31.5K), Total Brands (371), Average Selling Price (₹1,697), Median Price (₹1,484), Average Discount (~50%), and Total Customer Reviews (3.31M).
-- **Brand Performance & Market Mix:** Head-to-head performance matrix ranking brands by product volume, average customer rating, discount reliance, and total review engagement.
-- **Price Distribution & Promotional Matrix:** Visual distribution across catalog price bands (Budget, Mid-Range, Premium, Luxury) overlaid with discount depth.
-- **Custom DAX Measures:** Includes weighted customer rating calculations, engagement efficiency ratios, price elasticity proxies, and normalized brand value rankings.
-- **Interactive Dynamic Slicers:** Filter instantly by brand name, price tier, customer rating thresholds, and promotional discount depth.
+- **Executive Summary KPI Cards:** Real-time metrics including **Total Products (31,527)**, **Total Brands (371)**, **Average Price (₹1,697)**, **Average Rating (3.98)**, **Average Discount (50.3%)**, and **Total Customer Ratings (3.31M)**.
+- **Top 10 Brands by Product Count & Engagement:** Catalog volume breakdown led by *United Colors of Benetton* (2,982), *Flying Machine* (2,573), and *Roadster* (1,794), along with customer rating engagement charts (Roadster leading with 532K ratings).
+- **Price Distribution & Category Breakdown:** Catalog price band distribution and donut chart showing segment mix (e.g. ₹1500–₹1999: 27.39%, ₹1000–₹1499: 25.06%, ₹500–₹999: 24.8%).
+- **Brand Ratings & Promotional Discount Analysis:** Ratings breakdown (Levis & Nautica at 4.2 average rating) and discount depth leaderboards (HJ HASASI, Kotty, Roadster, glitchez).
+- **Composite Scoring Visuals:** Value Score leaders (*COMFITS*, *KETCH*, *MaveriQ*) and Business Performance Score rankings (*Roadster*, *United Colors of Benetton*, *Flying Machine*, *HIGHLANDER*, *Nike*).
+- **Interactive Report Filters:** Instant slicing by Brand Name, Price Segment, and Rating Category.
 
 ---
 
