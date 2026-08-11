@@ -2,7 +2,6 @@
 data/raw/
 data/processed/
 *.csv
-!data/sample/*.csv
 *.xlsx
 *.parquet
 
@@ -11,31 +10,17 @@ __pycache__/
 *.py[cod]
 .venv/
 venv/
-env/
 .env
-.env.local
-*.egg-info/
-dist/
-build/
 
 # Jupyter
 .ipynb_checkpoints/
-*.ipynb_checkpoints
 
 # Generated reports / outputs
 reports/
 output/
 *.html
-*.pptx
 
 # OS / IDE
 .DS_Store
-Thumbs.db
-desktop.ini
 .vscode/
 .idea/
-*.swp
-*.swo
-
-# Internal review scripts (temporary)
-_review_*
